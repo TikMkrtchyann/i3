@@ -52,8 +52,11 @@ module-margin-left = 1
 module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+;font-2 = siji:pixelsize=10;1
+font-1 = IBM Plex Mono:medium:size=9;3
+font-2 = FontAwesome5Free:style=Solid:size=10;3
+
 
 modules-left = bspwm i3
 modules-center = mpd
