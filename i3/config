@@ -13,10 +13,10 @@ set $mod Mod1
 
 # Gaps
 for_window [class=".*"] border pixel 1
-gaps outer 20
-gaps inner 18
+gaps outer 2
+gaps inner 6
 gaps top 2
-gaps bottom 35
+gaps bottom 2
 
 
 #Border Colors
@@ -59,7 +59,10 @@ floating_modifier $mod
 
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec gnome-terminal
+
+# start a flameshot
+bindsym $mod+Shift+S exec flameshot gui
 
 
 # kill focused window
@@ -206,14 +209,3 @@ set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
 
-
-# window rules, you can find the window class using xpropc
-assign [class=URxvt] 1
-assign [class=Firefox|Transmission-gtk] 2
-assign [class=Thunar|File-roller] 3
-assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
-assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
-assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
-for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol] floating enable
-for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
-for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
