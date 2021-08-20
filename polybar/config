@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #454d47
+background = #363432
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -64,7 +64,7 @@ font-7 = "Font Awesome 5 Brands:pixelsize=8;1"
 
 
 
-modules-left = i3
+modules-left = i3 xwindow
 modules-center = mpd
 modules-right = pulseaudio xkeyboard memory cpu temperature date
 
@@ -87,8 +87,20 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 [module/xwindow]
+;https://github.com/jaagr/polybar/wiki/Module:-xwindow
 type = internal/xwindow
-label = %title:0:30:...%
+
+; Available tokens:
+;   %title%
+; Default: %title%
+label = %title%
+label-maxlen = 50
+
+format-prefix = "  "
+format-prefix-underline = #292d3e
+format-underline = #e1acff
+format-foreground = #e1acff
+format-background = ${colors.background}
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -156,11 +168,14 @@ fuzzy-match = false
 
 ws-icon-0 = 1;
 ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
 ws-icon-4 = 5;
 ws-icon-5 = 6;
 ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 0;
 ;ws-icon-default = " "
 
 ; Available tags:
@@ -183,7 +198,7 @@ label-mode-background = #FFBB00
 label-focused = %icon%   %name%
 label-focused-background = ${colors.background}
 label-focused-foreground = ${colors.foreground}
-label-focused-underline = #AD69AF
+label-focused-underline = #e1acff
 label-focused-padding = 2
 
 ; Available tokens:
@@ -259,6 +274,7 @@ format-prefix-foreground = #a0deae
 format-underline = #a0deae
 label = %gb_used%
 
+
 [module/wlan]
 type = internal/network
 interface = net1
@@ -299,12 +315,12 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date =
 date-alt = " %Y-%m-%d"
 
-time = %H:%M
+time = %H:%M:%S
 time-alt = %H:%M:%S
 
 format-prefix = 
@@ -345,7 +361,7 @@ type = internal/temperature
 interval = 0.5
 thermal-zone = 0
 
-hwmon-path = /sys/class/hwmon/hwmon0/temp1_input
+hwmon-path = /sys/class/hwmon/hwmon1/temp1_input
 ;base-temperature = 20
 ;warn-temperature = 60
 
