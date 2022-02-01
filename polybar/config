@@ -51,22 +51,14 @@ padding-right = 3
 module-margin-left = 3
 module-margin-right = 3
 
-font-0 = fixed:pixelsize=10;1
-;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-2 = siji:pixelsize=10;1
-font-1 = IBM Plex Mono:medium:size=9;3
-font-2 = FontAwesome5Free:style=Solid:size=10;3
-font-3 = "UbuntuMono Nerd Font:size=10;2"
-font-4 = "UbuntuMono Nerd Font:size=16;3"
-font-5 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
-font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
-font-7 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-0 = "Ubuntu:bold:size=10;2"
+font-1 = "SauceCodePro Nerd Font Mono:size=18;4"
+;font-2 = "Material Icons:pixelsize=13;2"
 
 
 
 modules-left = i3 xwindow
-modules-center = mpd
-modules-right = pulseaudio xkeyboard memory cpu temperature date
+modules-right = kernel-name cpu memory temperature pulseaudio xkeyboard date
 
 tray-position = right
 tray-padding = 2
@@ -108,7 +100,7 @@ blacklist-0 = num lock
 
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ##8eaced
+format-prefix-underline = #8eaced
 
 label-layout = %layout%
 label-layout-underline = #8eaced
@@ -166,16 +158,16 @@ fuzzy-match = false
 ;http://fontawesome.io/cheatsheet/
 ;       v     
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 0;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 0;
 ;ws-icon-default = " "
 
 ; Available tags:
@@ -195,7 +187,7 @@ label-mode-background = #FFBB00
 ;   %output%
 ; Default: %icon%  %name%
 ; focused = Active workspace on focused monitor
-label-focused = %icon%   %name%
+label-focused = %name%
 label-focused-background = ${colors.background}
 label-focused-foreground = ${colors.foreground}
 label-focused-underline = #e1acff
@@ -207,14 +199,14 @@ label-focused-padding = 2
 ;   %index%
 ; Default: %icon%  %name%
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %icon%   %name%
+label-unfocused = %name%
 label-unfocused-padding = 2
 label-unfocused-background = ${colors.background}
 label-unfocused-foreground = ${colors.foreground}
 label-unfocused-underline =
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %icon%  %name%
+label-visible = %name%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = 2
@@ -225,7 +217,7 @@ label-visible-padding = 2
 ;   %index%
 ; Default: %icon%  %name%
 ; urgent = Workspace with urgency hint set
-label-urgent = %icon%  %name%
+label-urgent = %name%
 label-urgent-background = ${self.label-focused-background}
 label-urgent-foreground = #db104e
 label-urgent-padding = 2
@@ -233,8 +225,12 @@ label-urgent-padding = 2
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
-
-
+[module/kernel-name]
+type = custom/script
+exec = uname -r
+interval = 10000
+label = "  %output% "
+label-underline = #d9c1b0
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -261,7 +257,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = " "
 format-prefix-foreground = #a0c4de
 format-underline = #a0c4de
 label = %percentage:2%%
@@ -269,7 +265,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 1
-format-prefix = "  "
+format-prefix = "  "
 format-prefix-foreground = #a0deae
 format-underline = #a0deae
 label = %gb_used%
@@ -323,8 +319,8 @@ date-alt = " %Y-%m-%d"
 time = %H:%M:%S
 time-alt = %H:%M:%S
 
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix = "  "   
+format-prefix-foreground = #de8745
 format-underline = #0a6cf5
 
 label = %date% %time%
@@ -358,14 +354,10 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/temperature]
 type = internal/temperature
-interval = 0.5
+label = " %temperature-c%"
+interval = 1
 thermal-zone = 0
-
-hwmon-path = /sys/class/hwmon/hwmon1/temp1_input
-;base-temperature = 20
-;warn-temperature = 60
-
-label =   %temperature-c%
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon0/temp1_input
 format-underline = #dbb293
 
 
@@ -373,4 +365,4 @@ format-underline = #dbb293
 margin-top = 5
 margin-bottom = 5
 
-; vim:ft=dosini
+; vm:ft=dosini
