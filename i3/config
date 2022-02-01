@@ -9,10 +9,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # Gaps
-for_window [class=".*"] border pixel 1
+for_window [class=".*"] border pixel 1.7
 gaps outer 2
 gaps inner 6
 gaps top 2
@@ -20,7 +20,7 @@ gaps bottom 2
 
 
 #Border Colors
-client.focused              #33D2FF #33D2FF #33D2FF
+client.focused              #f0d575 #f0d575 #f0d575
 client.unfocused            #FFFFFF #FFFFFF #FFFFFF
 client.focused_inactive     #33D2FF #33D2FF #33D2FF
 
@@ -59,7 +59,7 @@ floating_modifier $mod
 
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Shift+Return exec gnome-terminal
 
 # start a flameshot
 bindsym $mod+Shift+S exec flameshot gui
@@ -208,4 +208,3 @@ set $inactive-bg-color   #000000
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
-
