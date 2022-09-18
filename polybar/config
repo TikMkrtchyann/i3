@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #363432
+background = #2A2C36
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -30,7 +30,7 @@ alert = #bd2c40
 [bar/bar]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 23
+height = 26
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 6.0
@@ -48,17 +48,18 @@ line-color = #f00
 padding-left = 2
 padding-right = 3
 
-module-margin-left = 3
-module-margin-right = 3
+module-margin-left = 1
+module-margin-right = 1
 
-font-0 = "Ubuntu:bold:size=10;2"
+;font0 -> polybar base font
+font-0 = "Ubuntu:bold:antialias=true:hinting=true:size=9.5;2"		
 font-1 = "SauceCodePro Nerd Font Mono:size=18;4"
 ;font-2 = "Material Icons:pixelsize=13;2"
 
 
 
-modules-left = i3 xwindow
-modules-right = kernel-name cpu memory temperature pulseaudio xkeyboard date
+modules-left = i3 sep xwindow
+modules-right = sep kernel-name sep cpu sep temperature sep memory sep filesystem sep volume sep xkeyboard sep date sep
 
 tray-position = right
 tray-padding = 2
@@ -88,10 +89,10 @@ type = internal/xwindow
 label = %title%
 label-maxlen = 50
 
-format-prefix = "  "
+format-prefix = "[ | ]  "
 format-prefix-underline = #292d3e
-format-underline = #e1acff
-format-foreground = #e1acff
+#format-underline = #e1acff
+format-foreground = #9999A6
 format-background = ${colors.background}
 
 [module/xkeyboard]
@@ -100,10 +101,11 @@ blacklist-0 = num lock
 
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = #8eaced
+#format-prefix-underline = #8eaced
 
+label-seporator = "|"
 label-layout = %layout%
-label-layout-underline = #8eaced
+#label-layout-underline = #8eaced
 
 label-indicator-padding = 2
 label-indicator-margin = 1
@@ -225,144 +227,204 @@ label-urgent-padding = 2
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
-[module/kernel-name]
-type = custom/script
-exec = uname -r
-interval = 10000
-label = "  %output% "
-label-underline = #d9c1b0
 
-[module/xbacklight]
-type = internal/xbacklight
 
-format = <label> <bar>
-label = BL
 
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
+######################################## MODULES ####################################
 
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = " "
-format-prefix-foreground = #a0c4de
-format-underline = #a0c4de
-label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
-interval = 1
-format-prefix = "  "
-format-prefix-foreground = #a0deae
-format-underline = #a0deae
-label = %gb_used%
+; Seconds to sleep between updates
+interval = 3
 
+label = "  mem: %mb_used% (%percentage_used%%)"
 
-[module/wlan]
-type = internal/network
-interface = net1
-interval = 3.0
+label-seporator = "|"
+format-prefix-padding = 2
+format-prefix-font = 2
+format-prefix-foreground = #ffffff
+;format-background = #ed5562
+format-foreground = #B3656B
+#format-underline = #ed5562
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
-
-[module/eth]
-type = internal/network
-interface = vmnet8
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [module/date]
 type = internal/date
 interval = 1
 
-date =
-date-alt = " %Y-%m-%d"
+date = "  﨟  %A, %b %d -"
 
-time = %H:%M:%S
-time-alt = %H:%M:%S
+;time = "  %I:%M %p  "
+time = "%I:%M:%S %p  "
 
-format-prefix = "  "   
-format-prefix-foreground = #de8745
-format-underline = #0a6cf5
+;format-prefix = ""
+format-prefix-padding = 0
+format-prefix-font = 1
+format-prefix-foreground = #ffffff
+;format-background = #f05e41
+format-foreground = #79C0D2
+#format-underline = #f05e41
 
-label = %date% %time%
+label = %date% (%time%)
 
-[module/pulseaudio]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/volume]
 type = internal/pulseaudio
+format-volume =  "<ramp-volume> <label-volume>"
+ramp-volume-0 =
+ramp-volume-0-font = 1
+ramp-volume-1 =墳
+ramp-volume-1-font = 1
+ramp-volume-2 =墳
+ramp-volume-2-font = 1
+;format-volume-background = #ebaa60
+format-volume-foreground = #91A188
+#format-volume-underline = #ebaa60
+format-volume-padding = 1
 
-format-volume = <label-volume> <bar-volume>
-label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
+format-muted = <label-muted>
+;format-muted-background = ${colors.white} 	
+format-muted-foreground = ${colors.white}
+#format-muted-underline = #ebaa60
+label-muted ="  "
+format-muted-font = 2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-label-muted = 🔇 muted
-label-muted-foreground = #86bf93
+[module/windowtitle]
+type = internal/xwindow
+format = <label>
+;format-background = ${colors.cyan}
+format-foreground = ${colors.cyan}
+format-padding = 1
+label = "  %title%"
+label-maxlen = 50
+label-empty = "   free"
+label-empty-foreground = ${colors.cyan}
 
-bar-volume-width = 5
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = 
-bar-volume-indicator-font = 2
-bar-volume-fill = 
-bar-volume-fill-font = 2
-bar-volume-empty = 
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/kernel-name]
+type = custom/script
+exec = uname -r
+interval = 10000
+label = "   %output% "
+#format-underline = #4291db
+format-foreground = #9EA0AD
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/sep]
+type = custom/text
+content = |
+content-foreground = #666666
+content-padding = 0
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+interval = 10
+fixed-values = true
+spacing = 4
+
+format-mounted = <label-mounted>
+
+format-unmounted = <label-unmounted>
+
+
+label-mounted = "   hdd: %free% free"
+
+
+label-unmounted = %mountpoint%: not mounted
+label-unmounted-foreground = #55
+
+label-mounted-foreground = #849FBA
+#label-mounted-underline = #74b5f2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/network]
+type = custom/script
+exec = ~/bin/network.sh
+interval = 3
+label = " %output% "
+format-foreground = #d8dee9
+format-background = #2e3440
+format-prefix = " 🔃️"
+;format-prefix-foreground = #e5e9f0
+#format-underline = #5E81AC
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/batt]
+type = custom/script
+exec = ~/bin/batt.sh
+interval = 30
+label = " %output%"
+format-foreground = #d8dee9
+format-background = #2e3440
+format-prefix = "🔋️"
+;format-prefix-foreground = #e5e9f0
+#format-underline = #5E81AC
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [module/temperature]
 type = internal/temperature
-label = " %temperature-c%"
-interval = 1
+interval = 0.5
 thermal-zone = 0
+
+units = true
+format = <label>
+label =   temp: (%temperature-c%)
 hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon0/temp1_input
-format-underline = #dbb293
 
 
-[global/wm]
-margin-top = 5
-margin-bottom = 5
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; vm:ft=dosini
+[module/updates-arch]
+type = custom/script
+exec = "checkupdates | wc -l"
+interval = 300
+tail = true
+format = <label>
+format-prefix = " "
+label = "%output% updates"
+format-foreground = #e677da
+#format-underline = #e677da
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/cpu]
+type = internal/cpu
+
+interval = 1
+format = <label>
+label = "   cpu: (%percentage%%) "
+
+;format-background = ${colors.yellow}
+format-foreground = #CAB99B
+#format-underline = ${colors.yellow}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+;[global/wm]
+;margin-top = 5
+;margin-bottom = 5
+
+; vim:ft=dosini
